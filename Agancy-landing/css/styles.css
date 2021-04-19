@@ -909,7 +909,7 @@ button:not(:hover) {
     width: 90px;
     height: 543px;
     position: fixed;
-    right: 0px;
+    right: -90px;
     top: 25%;
     opacity: 0.85;
     z-index: 1;

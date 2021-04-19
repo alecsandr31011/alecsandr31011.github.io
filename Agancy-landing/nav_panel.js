@@ -1,10 +1,22 @@
 const e = React.createElement; 
 var position = false; 
+var anim = 0;
+
+function getY(el) {
+    var t1 = el.getBoundingClientRect();
+    return t1.top;
+}
 
 function goLeft() {
+
+    let timePassed = 1;
     panel = document.getElementsByClassName('nav_panel')[0];
-    panel.style.right += 1 + 'px';
-    
+      let timer = setInterval(function() {
+        panel.style.right = timePassed * 5 - 90  + 'px';
+        timePassed++;
+        if (timePassed > 18) clearInterval(timer);
+
+      }, 20);
 }
 
 window.addEventListener('scroll', function() {
@@ -25,17 +37,43 @@ window.addEventListener('scroll', function() {
             else {
                 return e(
                     'div', 
-                    {className: 'nav_panel'},
+                    {onClick: () => test(), className: 'nav_panel'},
                     e('div',{onClick: () => window.scrollTo(pageXOffset, 0), className: 'home_panel panel_active'}, 'HOME'),
-                    e('div',{className: 'portf_panel'}, 'PORTFOLIO'),
-                    e('div',{className: 'about_panel'}, 'ABOUT US'),
-                    e('div',{className: 'contact_panel'}, 'CONTACT')
-                );
+                    e('div',{onClick: () => document.getElementById("projects").scrollIntoView(),className: 'portf_panel'}, 'PORTFOLIO'),
+                    e('div',{onClick: () => document.getElementById("about").scrollIntoView(),className: 'about_panel'}, 'ABOUT US'),
+                    e('div',{onClick: () => document.getElementById("contact").scrollIntoView(),className: 'contact_panel'}, 'CONTACT')
+                    );
+                }
             }
-        }
-    } 
+        } 
     domContainer = document.getElementById('nav_panel');
     ReactDOM.render(e(NavPanel), domContainer);
-    goLeft();
-}
+    if(position) goLeft();
+    }
+    if(position) {
+        b1 = document.getElementsByClassName('home_panel')[0];
+        b2 = document.getElementsByClassName('portf_panel')[0];
+        b3 = document.getElementsByClassName('about_panel')[0];
+        b4 = document.getElementsByClassName('contact_panel')[0];
+        v1 = document.getElementById('home');
+        v2 = document.getElementById('projects');
+        v3 = document.getElementById('about');
+        v4 = document.getElementById('contact');
+        if(1100 <getY(v1) < 900 & getY(v1) > -500) {
+            b1.classList.add("panel_active");
+        }
+        else b1.classList.remove("panel_active");
+        if(getY(v2) < 985 & getY(v2) > -500) {
+            b2.classList.add("panel_active");
+        }
+        else b2.classList.remove("panel_active");
+        if(getY(v3) < 550 & getY(v3) > -500) {
+            b3.classList.add("panel_active");
+        }
+        else b3.classList.remove("panel_active");
+        if(getY(v4) < 1360 & getY(v4) > -500) {
+            b4.classList.add("panel_active");
+        }
+        else b4.classList.remove("panel_active");
+    }
 });
